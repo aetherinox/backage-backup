@@ -1,8 +1,3 @@
-471531/SolutionsDesign
-468914/devosoft
-468993/BibApp
-468038/gmartinezg10
-468125/adweb
 471108/WebAgenturKoerbler
 471413/dbgroup-at-ucsc
 470223/cakephp-fr
