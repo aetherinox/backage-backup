@@ -67,13 +67,14 @@ on:
                 type:           string
 
             # #
-            #   Main Branch
+            #   Branch
             #
-            #   main branch re-recreate
+            #   select branch to clean
+            #   you must also run the workflow from that branch
             # #
 
             BRANCH:
-                description:    '🌳 Main Branch'
+                description:    '🌳 Branch'
                 required:       true
                 default:        'main'
                 type:           string
@@ -101,6 +102,10 @@ jobs:
         runs-on: ubuntu-latest
       # runs-on: apollo-x64
         timeout-minutes: 15
+        permissions:
+            # Give the default GITHUB_TOKEN write permission to commit and push the
+            # added or changed files to the repository.
+            contents: write
         steps:
 
             # #
@@ -290,11 +295,12 @@ jobs:
             # #
 
             - name: >-
-                  🗑️ Clean References
+                  🗑️ Garbage Collection (Aggressive)
               run: |
                     # Remove remote-tracking references to deleted branches (optional)
                     git fetch origin --prune
-
+                    git repack
+                    git prune-packed
                     git reflog expire --expire=now --all
                     git gc --prune=now --aggressive
 
