@@ -32,55 +32,55 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
-      permissions:
-          contents: write
+        permissions:
+            contents: write
 
-      steps:
-          - name: Checkout repository
-            uses: actions/checkout@v4
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-          - name: Tune dpkg
-            uses: abbbi/github-actions-tune@v1
+            - name: Tune dpkg
+              uses: abbbi/github-actions-tune@v1
 
-          - name: Set dpkg
-            run: sudo rm -f /usr/local/bin/dpkg
+            - name: Set dpkg
+              run: sudo rm -f /usr/local/bin/dpkg
 
-          - name: Tune apt
-            uses: firebuild/apt-eatmydata-action@v1
+            - name: Tune apt
+              uses: firebuild/apt-eatmydata-action@v1
 
-          - name: Check for release
-            id: release
-            continue-on-error: true
-            uses: cardinalby/git-get-release-action@v1
-            with:
-                latest: true
+            - name: Check for release
+              id: release
+              continue-on-error: true
+              uses: cardinalby/git-get-release-action@v1
+              with:
+                  latest: true
 
-          - name: Fetch all data
-            if: ${{ steps.release.outcome == 'success' }}
-            uses: robinraju/release-downloader@v1
-            with:
-                latest: true
-                fileName: "*.zst"
-                tarBall: false
-                zipBall: false
+            - name: Fetch all data
+              if: ${{ steps.release.outcome == 'success' }}
+              uses: robinraju/release-downloader@v1
+              with:
+                  latest: true
+                  fileName: "*.zst"
+                  tarBall: false
+                  zipBall: false
 
-          - name: Dry run
-            id: update
-            run: |
-                docker run -v $PWD:/app --env-file <(env | grep GITHUB) \
-                  ghcr.io/$GITHUB_OWNER/$GITHUB_REPO:master \
-                  bash src/test/update.sh; echo "updated=$?" >> "$GITHUB_OUTPUT"
+            - name: Dry run
+              id: update
+              run: |
+                  docker run -v $PWD:/app --env-file <(env | grep GITHUB) \
+                    ghcr.io/$GITHUB_OWNER/$GITHUB_REPO:master \
+                    bash src/test/update.sh; echo "updated=$?" >> "$GITHUB_OUTPUT"
 
-          - name: Get date
-            id: date
-            run: echo "tag=$(date -u +%-Y.%-m).$((($(date -u +%-d)-1)/14))" >> "$GITHUB_OUTPUT"
+            - name: Get date
+              id: date
+              run: echo "tag=$(date -u +%-Y.%-m).$((($(date -u +%-d)-1)/14))" >> "$GITHUB_OUTPUT"
 
-          - name: Save database
-            if: ${{ steps.update.outputs.updated == '0' }}
-            uses: ncipollo/release-action@v1
-            with:
-                artifacts: "*.zst"
-                bodyFile: "CHANGELOG.md"
-                tag: "v${{ steps.date.outputs.tag }}"
-                commit: "master"
-                allowUpdates: true
+            - name: Save database
+              if: ${{ steps.update.outputs.updated == '0' }}
+              uses: ncipollo/release-action@v1
+              with:
+                  artifacts: "*.zst"
+                  bodyFile: "CHANGELOG.md"
+                  tag: "v${{ steps.date.outputs.tag }}"
+                  commit: "master"
+                  allowUpdates: true
