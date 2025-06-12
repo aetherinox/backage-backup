@@ -1,8 +1,3 @@
-471108/WebAgenturKoerbler
-471413/dbgroup-at-ucsc
-470223/cakephp-fr
-472175/SmartJog
-467985/UCF
 468061/claytonbench
 468045/hoetmaaiers
 467964/goingmonk
