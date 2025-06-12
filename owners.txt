@@ -1,8 +1,3 @@
-468018/elkernel
-471288/monsoonco
-468058/fjsermu
-468021/jasonwilliams-zz
-467977/hipertipo
 470322/geodeist
 468327/itomic
 467969/gregthomas
