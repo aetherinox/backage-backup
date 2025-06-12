@@ -1,8 +1,3 @@
-467997/diznot
-467998/Stephenxf
-471034/animalsystems
-468042/bdillender
-468006/FDiskas
 471531/SolutionsDesign
 468914/devosoft
 468993/BibApp
