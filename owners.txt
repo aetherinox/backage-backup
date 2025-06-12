@@ -1,8 +1,3 @@
-470322/geodeist
-468327/itomic
-467969/gregthomas
-468095/puffer
-468004/ledgaming
 468067/rampager100k
 469342/androidsoft-org
 471076/seraphimlucifer
