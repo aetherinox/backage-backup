@@ -1,8 +1,3 @@
-471015/chrisjunior
-469576/buddycloud
-467976/TSF
-470259/RCPRG-ros-pkg
-468020/danav
 469877/Redev
 468025/StephenClouse
 468060/bitman0101
