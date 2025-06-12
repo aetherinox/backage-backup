@@ -103,7 +103,7 @@ main() {
     clean_owners "$BKG_OPTOUT"
     opted_out=$(wc -l <"$BKG_OPTOUT")
     opted_out_before=$(get_BKG BKG_OUT)
-    fast_out=$([ "$GITHUB_OWNER" = "aetherinox" ] && [ -n "$opted_out_before" ] && (( opted_out_before < opted_out )) && echo "true" || echo "false")
+    fast_out=$([ "$GITHUB_OWNER" = "ipitio" ] && [ -n "$opted_out_before" ] && (( opted_out_before < opted_out )) && echo "true" || echo "false")
 
     if [ "$BKG_MODE" -ne 2 ]; then
         if [ "$BKG_MODE" -eq 0 ] || [ "$BKG_MODE" -eq 3 ]; then
@@ -111,7 +111,7 @@ main() {
                 grep -oP '^[^\/]+' "$BKG_OPTOUT" | env_parallel --lb save_owner
                 return_code=1
             else
-                if [ "$GITHUB_OWNER" = "aetherinox" ]; then
+                if [ "$GITHUB_OWNER" = "ipitio" ]; then
                     explore "$GITHUB_OWNER" >"$connections"
                     explore "$GITHUB_OWNER/$GITHUB_REPO" >>"$connections"
 
@@ -123,8 +123,8 @@ main() {
                     [[ "$(wc -l <"$BKG_OWNERS")" -ge $(($(sort -u "$connections" | wc -l) + 100)) ]] || seq 1 3 | env_parallel --lb --halt soon,fail=1 page_owner
                 else
                     get_membership "$GITHUB_OWNER" >"$connections"
-                    curl "https://raw.githubusercontent.com/aetherinox/backage/refs/heads/$GITHUB_BRANCH/optout.txt" > base_out
-                    curl "https://raw.githubusercontent.com/aetherinox/backage/refs/heads/$GITHUB_BRANCH/owners.txt" > base_own
+                    curl "https://raw.githubusercontent.com/ipitio/backage/refs/heads/$GITHUB_BRANCH/optout.txt" > base_out
+                    curl "https://raw.githubusercontent.com/ipitio/backage/refs/heads/$GITHUB_BRANCH/owners.txt" > base_own
                     ! diff -q "$BKG_OWNERS" base_own || : > "$BKG_OWNERS"
                     ! diff -q "$BKG_OPTOUT" base_out || : > "$BKG_OPTOUT"
                     rm -f base_out base_own
@@ -194,7 +194,7 @@ main() {
         BKG_BATCH_FIRST_STARTED=$(get_BKG BKG_BATCH_FIRST_STARTED)
         [ -d "$BKG_INDEX_DIR" ] || mkdir "$BKG_INDEX_DIR"
 
-        if [ "$GITHUB_OWNER" = "aetherinox" ]; then
+        if [ "$GITHUB_OWNER" = "ipitio" ]; then
             get_BKG_set BKG_OWNERS_QUEUE | env_parallel --lb update_owner
         else # typically fewer owners
             run_parallel update_owner "$(get_BKG_set BKG_OWNERS_QUEUE)"
